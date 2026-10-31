@@ -285,3 +285,40 @@ body {
     font-size: 0.9rem;
     font-weight: bold;
 }
+
+
+.audio-card {
+    grid-column: span 1;
+}
+
+.audio-controls {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.audio-btn {
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid var(--card-border);
+    color: var(--text-main);
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.audio-btn:hover {
+    border-color: var(--accent-color);
+    background: rgba(56, 189, 248, 0.1);
+}
+
+.stop-btn {
+    border-color: var(--danger-color);
+    color: var(--danger-color);
+}
+
+.stop-btn:hover {
+    background: rgba(244, 63, 94, 0.1);
+}

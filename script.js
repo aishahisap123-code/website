@@ -273,3 +273,36 @@ linkForm.addEventListener('submit', (e) => {
 });
 
 renderLinks();
+
+
+const rainBtn = document.getElementById('rain-btn');
+const wavesBtn = document.getElementById('waves-btn');
+const stopAudio = document.getElementById('stop-audio-btn');
+
+let currentAudio = null;
+
+function playSound(url) {
+    if (currentAudio) {
+        currentAudio.pause();
+        currentAudio.currentTime = 0;
+    }
+    currentAudio = new Audio(url);
+    currentAudio.loop = true;
+    currentAudio.play().catch(e => console.log("Audio play blocked or failed:", e));
+}
+
+rainBtn.addEventListener('click', () => {
+    playSound('https://actions.google.com/sounds/v1/weather/rain_heavy_loud.ogg');
+});
+
+wavesBtn.addEventListener('click', () => {
+    playSound('https://actions.google.com/sounds/v1/water/waves_ocean.ogg');
+});
+
+stopAudioBtn.addEventListener('click', () => {
+    if (currentAudio) {
+        currentAudio.pause();
+        currentAudio.currentTime = 0;
+        currentAudio = null;
+    }
+});
