@@ -225,3 +225,63 @@ body {
     background-color: var(--accent-color);
     color: #0f172a;
 }
+
+
+.links-card {
+    grid-column: span 1;
+}
+
+#link-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+#link-name, #link-url {
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    padding: 0.5rem 0.75rem;
+    color: var(--text-main);
+    outline: none;
+}
+
+#link-name:focus, #linl-url:focus {
+    border-color: var(--accent-color);
+}
+
+#link-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+.link-chip {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(15, 23, 42, 0.5);
+    border: 1px solid var(--card-border);
+    padding: 0.4rem 0.75rem;
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--text-main);
+    font-size: 0.9rem;
+    transition: border-color 0.2s;
+}
+
+.link-chip:hover {
+    border-color: var(--accent-color);
+}
+
+.link-delete {
+    background: none;
+    border: none;
+    color: var(--danger-color);
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: bold;
+}

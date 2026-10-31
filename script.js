@@ -209,3 +209,67 @@ async function fetchQuote() {
 newQuoteBtn.addEventListener('click', fetchQuote);
 
 fetchQuote();
+
+
+const linkForm = document.getElementById('link-form');
+const linkNameInput = document.getElementById('link-name');
+const linkUrlInput = document.getElementById('link-url');
+const linksGrid = document.getElementById('links-grid');
+
+let links = JSON.parse(localStorage.getItem('quickLinks')) || [
+    { name: 'Google', url: 'https://www.google.com'},
+    { name: 'Github', url: 'https://github.com'},
+    { name: 'Youtube', url: 'https://www.youtude.com'}
+];
+
+function saveLinks() {
+    localStorage.setItem('quickLinks', JSON.stringify(links));
+}
+
+function renderLinks() {
+    linksGrid.innerHTML = '';
+
+    links.forEach((link, index) => {
+        const a = document.createElement('a');
+        a.href = link.url;
+        a.target = '_blank';
+        a.className = 'link-chip';
+        a.textContent = link.name;
+
+        const deleteBtn = document.createElement('button');
+        deleteBtn.textContent = 'x';
+        deleteBtn.className = 'link-delete';
+
+        deleteBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            links.splice(index, 1);
+            saveLinks();
+            renderLinks();
+        });
+
+        a.appendChild(deleteBtn);
+        linksGrid.appendChild(a);
+        
+    });
+}
+
+linkForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = linkNameInput.value.trim();
+    let url = linkUrlInput.value.trim();
+
+    if (name && url) {
+
+        if (!url.startsWith('http://') && !url.startsWith('https://')) {
+            url = 'https://' + url;
+        }
+
+        links.push({ name, url });
+        linkNameInput.value = '';
+        linkUrlInput.value = '';
+        saveLinks();
+        renderLinks();
+    }
+});
+
+renderLinks();
