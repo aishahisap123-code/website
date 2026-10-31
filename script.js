@@ -313,3 +313,20 @@ stopAudioBtn.addEventListener('click', () => {
         currentAudio = null;
     }
 });
+
+
+const themeToggleBtn = document.getElementById('theme-toggle-btn');
+if (themeToggleBtn) {
+    themeToggleBtn.addEventListener('click', () => {
+        document.body.classList.toggle('light-mode');
+        const isLight = document.body.classList.contains('light-mode');
+        localStorage.setItem('theme', isLight ? 'light' : 'cyberpunk');
+        themeToggleBtn.textContent = isLight ? '☀️ Theme' : '🌙 Theme';
+    });
+}
+
+if (localStorage.getItem('theme') === 'light') {
+    document.body.classList.add('light-mode');
+    if (themeToggleBtn) themeToggleBtn.textContent = '☀️ Theme';
+} 
+

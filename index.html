@@ -21,6 +21,11 @@
             <p id="date">Loading date...</p>
         </header>
 
+        <div class="header-controls">
+            <button id="theme-toggle-btn">Theme</button>
+            <span id="streak-counter">STREAK: 0 DAYS</span>
+        </div>
+
         <main class="grid-layout">
 
             <section class="card weather-card">
@@ -80,6 +85,69 @@
                     <button id="stop-audio-btn" class="audio-btn stop-btn">Stop</button>
                 </div>
             </section>
+
+            <section class="card stats-card">
+                <h2>Focus Analytics</h2>
+                <div class="stats-row">
+                    <span>Completed:</span> <strong id="focus-mins">0 mins</strong>
+                </div> 
+                <div class="stats-row">
+                    <span>Focus Time:</span> <strong id="focus-mins">0 mins</strong>
+                </div>
+            </section>
+
+            <section class="card bg-customizer-card">
+                <h2>Grid Matrix</h2>
+                <div class="bg-options">
+                    <button class="bg-btn" data-bg="default">Cyber Grid</button>
+                    <button class="bg-btn" data-bg="matrix">Matrix Glow</button>
+                    <button class="bg-btn" data-bg="void">Dark Void</button>
+                </div>
+            </section>
+
+            <section class="card calendar-card">
+                <h2>Event Planner</h2>
+                <form id="event-form">
+                    <input type="text" id="event-input" placeholder="New event..." required />
+                    <input type="date" id="event-date" required />
+                    <button type="submit">Add</button>
+                </form>
+                <ul id="event-list"></ul>
+            </section>
+
+            <section class="card habit-card">
+                <h2>Habit Matrix</h2>
+                <ul id="habit-list">
+                    <li>
+                        <span>Drink Water</span>
+                        <input type="checkbox" class="habit-check" />
+                    </li>
+                    <li>
+                        <span>Meditate</span>
+                        <input type="checkbox" class="habit-check" />
+                    </li>
+                    <li>
+                        <span>Read 15mins</span>
+                        <input type="checkbox" class="habit-check" />
+                    </li>
+                </ul>
+            </section>
+
+
+            <section class="card spotify-card">
+                <h2>Cyber Audio Stream</h2>
+                <iframe style="border-radius:4px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DXdLEN7aqioXM?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            </section>
+
+            <section class="card search-card">
+                <h2>Global Command Bar</h2>
+                <div class="search-box">
+                    <input type="text" id="global-search" placeholder="Seach Google or URL..." />
+                    <button id="search-btn">Launch</button>
+                </div>
+            </section>
+
+
 
         </main>
     </div>

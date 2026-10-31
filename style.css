@@ -309,3 +309,90 @@ button:hover, .audio-btn:hover, #new-quote-btn:hover, .timer-controls button:hov
     color: #000;
     box-shadow: var(--glow-magenta);
 }
+
+body.light-mode {
+    --bg-color: #e2e8f0;
+    --card-bg: rgba(255, 255, 255, 0.9);
+    --card-border: #cbd5e1;
+    --text-main: #0f172a;
+    --text-muted: #64748b;
+}
+
+body.bg-matrix {
+    background-image:
+      radial-gradient(circle at 50% 50%, rgba(0, 255, 65, 0.1) 0%, transparent 60%),
+      linear-gradient(rgba(0, 255, 65, 0.05) 1px, transparent 1px);
+    background-size: 100% 100%, 20px 20px;
+}
+
+body.bg-void {
+    background-image: none;
+    background-color: #030305;
+}
+
+.header-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+#streak-counter {
+    font-family: 'Orbitron', sans-serif;
+    color: var(--neon-yellow);
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+
+.stats-row {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.75rem;
+    font-size: 0.9rem;
+}
+
+#event-list, #habit-list {
+    list-style: none;
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+
+#event-list li, #habit-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(5, 7, 10, 0.6);
+    padding: 0.5rem;
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius);
+}
+
+
+.habit-check {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--neon-cyan);
+    cursor: pointer;
+}
+
+.bg-options {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.bg-btn {
+    flex: 1;
+    font-size: 0.75rem;
+    padding: 0.4rem;
+}
+
+.search-box {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
