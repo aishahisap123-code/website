@@ -148,3 +148,42 @@ notesInput.addEventListener('input', () => {
 });
 
 
+const tempElement = document.querySelector('.temp');
+const cityElement = document.querySelector('.city');
+
+async function fetchWeather(lat, lon) {
+    try {
+        const response = await fetch(
+            `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`
+        );
+        const data = await response.json();
+
+        const temp = Math.round(data.current_weather.temperature);
+        tempElement.textContent = `${temp}°C`;
+        cityElement.textContent = `Lat: ${lat.toFixed(2)}, Lon: ${lon.toFixed}`;
+    } catch (error) {
+        tempElement.textContent = "--°C";
+        cityElement.textContent = "Unable to fetch weather";
+        console.error("Weather error:", error);
+    }
+}
+
+function getLocationAndWeather() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                const lat = position.coords.latitude;
+                const lon = position.coords.longitude;
+                fetchWeather(lat, lon);
+            },
+            () => {
+
+                fetchWeather(53.76, -2.70);
+            }
+        );
+    } else {
+        fetchWeather(53.76, -2.70);
+    }
+}
+
+getLocationAndWeather();
