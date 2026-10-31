@@ -23,3 +23,59 @@ function updateClockAndGreeting() {
 
 updateClockAndGreeting();
 setInterval(updateClockAndGreeting, 1000);
+
+let workDuration = 25 * 60;
+let timeLeft = workDuration;
+let timerInterval = null;
+let isRunning = false;
+
+const timerDisplay = document.getElementById('timer-display');
+const startBtn = document.getElementById('start-btn');
+const pauseBtn = document.getElementById('pause-btn');
+const resetBtn = document.getElementById('reset-btn');
+
+function formatTime(seconds) {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+}
+
+function updateTimerDisplay() {
+    timerDisplay.textContent = formatTime(timeLeft);
+}
+
+function startTimer() {
+    if (isRunning) return;
+    isRunning = true;
+
+    timerInterval = setInterval(() => {
+        if (timeLeft > 0) {
+            timeLeft--;
+            updateTimerDisplay();
+        } else {
+            clearInterval(timerInterval);
+            isRunning = false;
+            alert('Pomodoro session complete! Take a break.');
+            timeLeft = workDuration;
+            updateTimerDisplay();
+        }
+    }, 1000);
+}
+
+function pauseTime() {
+    clearInterval(timerInterval);
+    isRunning = false;
+}
+
+function resetTimer() {
+    clearInterval(timerInterval);
+    isRunning = false;
+    timeLeft = workDuration;
+    updateTimerDisplay();
+}
+
+startBtn.addEventListener('click', startTimer);
+pauseBtn.addEventListener('click', pauseTime);
+resetBtn.addEventListener('click', resetTimer);
+
+updateTimerDisplay();
