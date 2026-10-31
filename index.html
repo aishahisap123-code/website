@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Productivity Dashboard</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="dashboard-container">
+
+        <header class="header-card">
+            <h1 id="greeting">Good Morning!</h1>
+            <div id="clock">00:00:00</div>
+            <p id="date">Loading date...</p>
+        </header>
+
+        <main class="grid-layout">
+
+            <section class="card weather-card">
+                <h2>Weather</h2>
+                <div id="weather-info">
+                    <p class="temp">--°C</p>
+                    <p class="city">Loading location...</p>
+                </div>
+            </section>
+
+            <section class="card podomoro-card">
+                <h2>Podomoro Timer</h2>
+                <div id="timer-display">25:00</div>
+                <div class="timer-controls">
+                    <button id="start-btn">Start</button>
+                    <button id="pause-btn">Pause</button>
+                    <button id="reset-btn">Reset</button>
+                </div>
+            </section>
+
+            <section class="card todo-card">
+                <h2>Tasks</h2>
+                <form id="to-do form">
+                    <input type="text" id="todo-input" placeholder="Add a new task..." required>
+                    <button type="submit">Add</button>
+                </form>
+                <ul id="todo-list"></ul>
+            </section>
+
+            <section class="card notes-card">
+                <h2>Quick Notes</h2>
+                <textarea id="notes-input" placeholder="Type your notes here... (auto-saves)"></textarea>
+            </section>
+
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
