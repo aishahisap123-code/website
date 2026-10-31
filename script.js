@@ -4,10 +4,10 @@ function updateClockAndGreeting() {
     const hours = String(now.getHours()).padStart(2, '0');
     const minutes = String(now.getMinutes()).padStart(2, '0');
     const seconds = String(now.getSeconds()).padStart(2, '0');
-    document.getElementByIs('clock').textContent = `${hours}:${minutes}:${seconds}`;
+    document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
 
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-    document.getElementById('date').textContent = now.toLocaleDateString('en-US', option);
+    document.getElementById('date').textContent = now.toLocaleDateString('en-US', options);
 
     const currentHour = now.getHours();
     const greetingElement = document.getElementById('greeting');
@@ -79,3 +79,62 @@ pauseBtn.addEventListener('click', pauseTime);
 resetBtn.addEventListener('click', resetTimer);
 
 updateTimerDisplay();
+
+const todoForm = document.getElementById('todo-form');
+const todoInput = document.getElementById('todo-input');
+const todoList = document.getElementById('todo-list');
+
+let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+
+function saveTasks() {
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+}
+
+function renderTasks() {
+    todoList.innerHTML = '';
+
+    tasks.forEach((task, index) => {
+        const li = document.createElement('li');
+        if (task.completed) {
+            li.classList.add('completed');
+        }
+
+        const span = document.createElement('span');
+        span.textContent = task.text;
+
+        span.addEventListener('click', () => {
+            tasks[index].completed = !tasks[index].completed;
+            saveTasks();
+            renderTasks();
+        });
+
+        const deleteBtn = document.createElement('button');
+        deleteBtn.textContent = 'x';
+        deleteBtn.classList.add('delete-btn');
+
+        deleteBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            tasks.splice(index, 1);
+            saveTasks();
+            renderTasks();
+        });
+
+        li.appendChild(span);
+        li.appendChild(deleteBtn);
+        todoList.appendChild(li);
+    });
+}
+
+todoForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const taskText = todoInput.ariaValueMax.trim();
+
+    if (taskText !== '') {
+        tasks.push({ text: taskText, completed: false });
+        todoInput.value = '';
+        saveTasks();
+        renderTasks();
+    }
+});
+
+renderTasks();
