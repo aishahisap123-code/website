@@ -127,7 +127,7 @@ function renderTasks() {
 
 todoForm.addEventListener('submit', (e) => {
     e.preventDefault();
-    const taskText = todoInput.ariaValueMax.trim();
+    const taskText = todoInput.value.trim();
 
     if (taskText !== '') {
         tasks.push({ text: taskText, completed: false });
@@ -138,3 +138,13 @@ todoForm.addEventListener('submit', (e) => {
 });
 
 renderTasks();
+
+const notesInput = document.getElementById('notes-input');
+
+notesInput.value = localStorage.getItem('quickNotes') || '';
+
+notesInput.addEventListener('input', () => {
+    localStorage.setItem('quickNotes', notesInput.value);
+});
+
+
