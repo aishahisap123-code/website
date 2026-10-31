@@ -160,7 +160,7 @@ async function fetchWeather(lat, lon) {
 
         const temp = Math.round(data.current_weather.temperature);
         tempElement.textContent = `${temp}°C`;
-        cityElement.textContent = `Lat: ${lat.toFixed(2)}, Lon: ${lon.toFixed}`;
+        cityElement.textContent = `Lat: ${lat.toFixed(2)}, Lon: ${lon.toFixed(2)}`;
     } catch (error) {
         tempElement.textContent = "--°C";
         cityElement.textContent = "Unable to fetch weather";
@@ -187,3 +187,25 @@ function getLocationAndWeather() {
 }
 
 getLocationAndWeather();
+
+const quoteText = document.getElementById('quote-text');
+const quoteAuthor = document.getElementById('quote-author');
+const newQuoteBtn = document.getElementById('new-quote-btn');
+
+async function fetchQuote() {
+    quoteText.textContent = "Loading quote..."
+    quoteAuthor.textContent = "";
+    try {
+        const response = await fetch('https://dummyjson.com/quotes/random');
+        const data = await response.json();
+        quoteText.textContent = `"${data.quote}"`;
+        quoteAuthor.textContent = `-${data.author}`;
+    } catch (error) {
+        quoteText.textContent = '"Believe you can and you\'re halfway there."';
+        quoteAuthor.textContent = '- Theodore Roosevelt';
+    }
+}
+
+newQuoteBtn.addEventListener('click', fetchQuote);
+
+fetchQuote();
