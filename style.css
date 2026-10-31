@@ -88,3 +88,104 @@ body {
     border-bottom: 1px solid var(--card-border);
     padding-bottom: 0.5rem;
 }
+
+.pomodoro-card {
+    text-align: center;
+}
+
+#timer-display {
+    font-size: 3rem;
+    font-weight: 700;
+    margin: 1rem 0;
+}
+
+.timer-controls button,
+#todo-form button,
+.todo-card button {
+    background-color: var(--accent-color);
+    color: #0f172a;
+    border: none;
+    padding: 0.5rem 1rem;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.timer-controls button:hover,
+#todo-form button:hover {
+    background-color: var(--accent-hover);
+}
+
+.timer-controls {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+#todo-form {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+#todo-input {
+    flex: 1;
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    padding: 0.5rem 0.75rem;
+    color: var(--text-main);
+    outline: none;
+}
+
+#todo-input:focus {
+    border-color: var(--accent-color);
+}
+
+#todo-list {
+    list-style: none;
+    max-height: 180px;
+    overflow-y: auto;
+}
+
+#todo-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    background: rgba(15, 23, 42, 0.4);
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+#todo-list li.completed span {
+    text-decoration: linethrough;
+    color: var(--text-muted);
+}
+
+.delete-btn {
+    background: none;
+    border: none;
+    color: var(--danger-color);
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+#notes-input {
+    width: 100%;
+    height: 140px;
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid var(--card-border);
+    border-radius: px;
+    padding: 0.75rem;
+    color: var(--text-main);
+    resize: none;
+    outline: none;
+    font-family: inherit;
+}
+
+#notes-input:focus {
+    border-color: var(--accent-color);
+}
