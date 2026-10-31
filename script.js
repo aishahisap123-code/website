@@ -277,7 +277,7 @@ renderLinks();
 
 const rainBtn = document.getElementById('rain-btn');
 const wavesBtn = document.getElementById('waves-btn');
-const stopAudio = document.getElementById('stop-audio-btn');
+const stopAudioBtn = document.getElementById('stop-audio-btn');
 
 let currentAudio = null;
 
@@ -288,15 +288,22 @@ function playSound(url) {
     }
     currentAudio = new Audio(url);
     currentAudio.loop = true;
-    currentAudio.play().catch(e => console.log("Audio play blocked or failed:", e));
-}
+
+    currentAudio.play().then(() => {
+        console.log("Audio playing successfully!");
+    }).catch(error => {
+        console.error("Audio playback failed:", error);
+        alert("Audio playback was blocked or failed to load.");
+
+        });
+    }
 
 rainBtn.addEventListener('click', () => {
     playSound('https://actions.google.com/sounds/v1/weather/rain_heavy_loud.ogg');
 });
 
 wavesBtn.addEventListener('click', () => {
-    playSound('https://actions.google.com/sounds/v1/water/waves_ocean.ogg');
+    playSound('https://orangefreesounds.com/wp-content/uploads/2022/07/Ocean-waves-sound-effect.mp3');
 });
 
 stopAudioBtn.addEventListener('click', () => {
