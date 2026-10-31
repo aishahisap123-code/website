@@ -1,31 +1,40 @@
-*{
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@500;600;700&display=swap');
+
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-:root{
-    --bg-color: #0f172a;
-    --card-bg: rgba(30, 41, 59, 0.7);
-    --card-border: rgba(255, 255, 255, 0.1);
-    --text-main: #f8fafc;
-    --text-muted: #94a3b8;
-    --accent-color: #38bdf8;
-    --accent-hover: #0ea5e9;
-    --danger-color: #f43f5e;
-    --radius: 16px;
+:root {
+    --bg-color: #08090c;
+    --card-bg: rgba(13, 16, 23, 0.85);
+    --card-border: #1f293d;
+    --neon-cyan: #00f3ff;
+    --neon-magenta: #ff0055;
+    --neon-yellow: #ffe600;
+    --text-main: #e2e8f0;
+    --text-muted: #64748b;
+    --glow-cyan: 0 0 12px rgba(0, 243, 255, 0.4);
+    --glow-magenta: 0 0 12px rgba(255, 0, 85, 0.4);
+    --radius: 4px; /* Sharp sci-fi corners */
 }
 
 body {
-    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 2rem;
     background-color: var(--bg-color);
-    background-image:
-      radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.15) 0px, transparent 50%),
-      radial-gradient(at 100% 100%, rgba(168, 85, 247, 0.15) 0px, transparent 50%);
+    background-image: 
+        radial-gradient(circle at 15% 15%, rgba(0, 243, 255, 0.05) 0%, transparent 40%),
+        radial-gradient(circle at 85% 85%, rgba(255, 0, 85, 0.05) 0%, transparent 40%),
+        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 100% 100%, 100% 100%, 30px 30px, 30px 30px;
     background-attachment: fixed;
     color: var(--text-main);
+    font-family: 'Rajdhani', sans-serif;
+    letter-spacing: 0.5px;
     min-height: 100vh;
-    padding: 2rem;
 }
 
 .dashboard-container {
@@ -36,27 +45,58 @@ body {
     gap: 2rem;
 }
 
+h1, h2, h3, .timer-display, #clock {
+    font-family: 'Orbitron', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
 .card, .header-card {
     background: var(--card-bg);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
     border: 1px solid var(--card-border);
+    border-left: 3px solid var(--neon-cyan);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(10px);
     border-radius: var(--radius);
     padding: 1.5rem;
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-    transition: transform 0.2s ease, border-color 0.2s ease;
+    transition: all 0.25s ease-in-out;
+    position: relative;
+    overflow: hidden;
+}
+
+.card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 8px;
+    height: 8px;
+    border-top: 2px solid var(--neon-cyan);
+    border-right: 2px solid var(--neon-cyan);
+}
+
+.card:hover {
+    border-color: var(--neon-cyan);
+    box-shadow: var(--glow-cyan), 0 4px 25px rgba(0, 0, 0, 0.9);
+    transform: translateY(-2px);
 }
 
 .header-card {
     text-align: center;
     padding: 2.5rem;
+    border-left: 3px solid var(--neon-magenta);
+}
+
+.header-card::after {
+    border-top-color: var(--neon-magenta);
+    border-right-color: var(--neon-magenta);
 }
 
 .header-card h1 {
     font-size: 2.5rem;
-    font-weight: 700;
+    font-weight: 900;
     margin-bottom: 0.5rem;
-    background: linear-gradient(to right, #38bdf8, #c084fc);
+    background: linear-gradient(to right, var(--neon-cyan), var(--neon-magenta));
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -64,14 +104,16 @@ body {
 
 #clock {
     font-size: 3.5rem;
-    font-weight: 600;
-    letter-spacing: 2px;
+    font-weight: 700;
+    color: var(--neon-cyan);
     margin: 0.5rem 0;
+    text-shadow: var(--glow-cyan);
 }
 
 #date {
     color: var(--text-muted);
     font-size: 1.1rem;
+    font-family: 'Rajdhani', sans-serif;
 }
 
 .grid-layout {
@@ -82,7 +124,7 @@ body {
 
 .card h2 {
     font-size: 1.25rem;
-    font-weight: 600;
+    font-weight: 700;
     margin-bottom: 1rem;
     color: var(--text-main);
     border-bottom: 1px solid var(--card-border);
@@ -95,26 +137,30 @@ body {
 
 #timer-display {
     font-size: 3rem;
-    font-weight: 700;
+    font-weight: 900;
+    color: var(--neon-yellow);
     margin: 1rem 0;
+    text-shadow: 0 0 10px rgba(255, 230, 0, 0.3);
 }
 
-.timer-controls button,
-#todo-form button,
-.todo-card button {
-    background-color: var(--accent-color);
-    color: #0f172a;
-    border: none;
-    padding: 0.5rem 1rem;
-    font-weight: 600;
-    border-radius: 8px;
+button, .audio-btn, #new-quote-btn, .timer-controls button, #todo-form button {
+    background: rgba(0, 243, 255, 0.05);
+    border: 1px solid var(--neon-cyan);
+    color: var(--neon-cyan);
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    padding: 0.6rem 1.2rem;
+    text-transform: uppercase;
+    border-radius: var(--radius);
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: all 0.2s ease;
 }
 
-.timer-controls button:hover,
-#todo-form button:hover {
-    background-color: var(--accent-hover);
+button:hover, .audio-btn:hover, #new-quote-btn:hover, .timer-controls button:hover, #todo-form button:hover {
+    background: var(--neon-cyan);
+    color: #000;
+    box-shadow: var(--glow-cyan);
 }
 
 .timer-controls {
@@ -129,18 +175,25 @@ body {
     margin-bottom: 1rem;
 }
 
-#todo-input {
-    flex: 1;
-    background: rgba(15, 23, 42, 0.6);
+#todo-input, #notes-input, #link-name, #link-url {
+    background: rgba(5, 7, 10, 0.9);
     border: 1px solid var(--card-border);
-    border-radius: 8px;
-    padding: 0.5rem 0.75rem;
     color: var(--text-main);
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1rem;
+    padding: 0.6rem;
+    border-radius: var(--radius);
     outline: none;
+    width: 100%;
 }
 
-#todo-input:focus {
-    border-color: var(--accent-color);
+#todo-input:focus, #notes-input:focus, #link-name:focus, #link-url:focus {
+    border-color: var(--neon-cyan);
+    box-shadow: var(--glow-cyan);
+}
+
+#todo-input {
+    flex: 1;
 }
 
 #todo-list {
@@ -155,39 +208,33 @@ body {
     align-items: center;
     padding: 0.5rem;
     margin-bottom: 0.5rem;
-    background: rgba(15, 23, 42, 0.4);
-    border-radius: 6px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    background: rgba(5, 7, 10, 0.6);
+    border-radius: var(--radius);
+    border: 1px solid var(--card-border);
 }
 
 #todo-list li.completed span {
-    text-decoration: linethrough;
+    text-decoration: line-through;
     color: var(--text-muted);
 }
 
-.delete-btn {
+.delete-btn, .link-delete {
     background: none;
     border: none;
-    color: var(--danger-color);
+    color: var(--neon-magenta);
     cursor: pointer;
-    font-size: 1rem;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+.delete-btn:hover, .link-delete:hover {
+    text-shadow: var(--glow-magenta);
 }
 
 #notes-input {
-    width: 100%;
     height: 140px;
-    background: rgba(15, 23, 42, 0.6);
-    border: 1px solid var(--card-border);
-    border-radius: px;
-    padding: 0.75rem;
-    color: var(--text-main);
     resize: none;
-    outline: none;
-    font-family: inherit;
-}
-
-#notes-input:focus {
-    border-color: var(--accent-color);
 }
 
 .quote-card {
@@ -210,45 +257,11 @@ body {
     margin-bottom: 1rem;
 }
 
-#new-quote-btn {
-    background-color: transparent;
-    border: 1px solid var(--accent-color);
-    color: var(--accent-color);
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: all 0.2s ease;
-}
-
-#new-quote-btn:hover {
-    background-color: var(--accent-color);
-    color: #0f172a;
-}
-
-
-.links-card {
-    grid-column: span 1;
-}
-
 #link-form {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
     margin-bottom: 1rem;
-}
-
-#link-name, #link-url {
-    background: rgba(15, 23, 42, 0.6);
-    border: 1px solid var(--card-border);
-    border-radius: 8px;
-    padding: 0.5rem 0.75rem;
-    color: var(--text-main);
-    outline: none;
-}
-
-#link-name:focus, #linl-url:focus {
-    border-color: var(--accent-color);
 }
 
 #link-grid {
@@ -263,32 +276,19 @@ body {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    background: rgba(15, 23, 42, 0.5);
+    background: rgba(5, 7, 10, 0.6);
     border: 1px solid var(--card-border);
     padding: 0.4rem 0.75rem;
-    border-radius: 8px;
+    border-radius: var(--radius);
     text-decoration: none;
     color: var(--text-main);
     font-size: 0.9rem;
-    transition: border-color 0.2s;
+    transition: all 0.2s;
 }
 
 .link-chip:hover {
-    border-color: var(--accent-color);
-}
-
-.link-delete {
-    background: none;
-    border: none;
-    color: var(--danger-color);
-    cursor: pointer;
-    font-size: 0.9rem;
-    font-weight: bold;
-}
-
-
-.audio-card {
-    grid-column: span 1;
+    border-color: var(--neon-cyan);
+    box-shadow: var(--glow-cyan);
 }
 
 .audio-controls {
@@ -298,27 +298,14 @@ body {
     margin-top: 1rem;
 }
 
-.audio-btn {
-    background: rgba(15, 23, 42, 0.6);
-    border: 1px solid var(--card-border);
-    color: var(--text-main);
-    padding: 0.6rem 1rem;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: all 0.2s ease;
-}
-
-.audio-btn:hover {
-    border-color: var(--accent-color);
-    background: rgba(56, 189, 248, 0.1);
-}
-
 .stop-btn {
-    border-color: var(--danger-color);
-    color: var(--danger-color);
+    border-color: var(--neon-magenta);
+    color: var(--neon-magenta);
+    background: rgba(255, 0, 85, 0.05);
 }
 
 .stop-btn:hover {
-    background: rgba(244, 63, 94, 0.1);
+    background: var(--neon-magenta);
+    color: #000;
+    box-shadow: var(--glow-magenta);
 }
