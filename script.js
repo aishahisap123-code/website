@@ -515,10 +515,10 @@ function setTheme(themeName) {
         document.body.classList.add('antique-theme');
         if (themeToggleBtn) themeToggleBtn.textContent = '📜 Antique';
     } else if (themeName === 'light') {
-        document.bodt.classList.add('light-mode');
+        document.body.classList.add('light-mode');
         if (themeToggleBtn) themeToggleBtn.textContent = '☀️ Light';
     } else {
-        if (themeToggleBtn) themeToggleBtn.textContent = '☀️ Light';
+        if (themeToggleBtn) themeToggleBtn.textContent = '🌙 Cyberpunk';
     }
     localStorage.setItem('lifeOsTheme', themeName);
 }
