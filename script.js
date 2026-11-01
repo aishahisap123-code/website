@@ -379,7 +379,7 @@ if (savedBg && savedBg !== 'default') {
 }
 
 const eventForm = document.getElementById('event-form');
-const eventInput = document.getElementById('event-form');
+const eventInput = document.getElementById('event-input');
 const eventDate = document.getElementById('event-date');
 const eventList = document.getElementById('event-list');
 
@@ -398,9 +398,15 @@ function renderEvents() {
         span.textContent = `${ev.text} ${ev.date ? `(${ev.date})` : ''}`;
 
         const delBtn = document.createElement('button');
+        delBtn.type = 'button';
         delBtn.className = 'delete-btn';
         delBtn.textContent = '✖';
-        delBtn.addEventListener('click', () => removeEventListener(idx));
+
+
+        delBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            removeEvent(idx);
+        });    
 
         li.appendChild(span);
         li.appendChild(delBtn);
@@ -420,14 +426,14 @@ if (eventForm) {
        localStorage.setItem('cyberEvents', JSON.stringify(events));
 
        if (eventInput) eventInput.value = '';
-       if (eventDAte) eventDate.value = '';
+       if (eventDate) eventDate.value = '';
 
        renderEvents();
        
     });
 }
 
-function removeEvents(index) {
+function removeEvent(index) {
     events.splice(index, 1);
     localStorage.setItem('cyberEvents', JSON.stringify(events));
     renderEvents();
