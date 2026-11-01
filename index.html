@@ -136,7 +136,28 @@
 
             <section class="card spotify-card">
                 <h2>Cyber Audio Stream</h2>
-                <iframe style="border-radius:4px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DXdLEN7aqioXM?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                <div style-"display: flex; gap: 0.5rem; margin-bottom: 1rem;">
+                    <input 
+                      type="text"
+                      id="spotify-input"
+                      placeholder="Paste Spotify playlist link..."
+                      style="flex: 1; font-size: 0.85rem;"
+                    />
+                    <button id=""load-spotify-btn>Load</button>  
+                </div>
+
+                <iframe
+                  id="spotify-iframe"
+                  style="border-radius:4px"
+                  src="https://open.spotify.com/embed/playlist/37i9dQZF1DXdLEN7aqioXM?utm_source=generator&theme=0"
+                  width="100%"
+                  height="152"
+                  frameBorder="0"
+                  allowfullscreen=""
+                  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                  loading="lazy">
+                </iframe>
+                
             </section>
 
             <section class="card search-card">
