@@ -315,22 +315,6 @@ stopAudioBtn.addEventListener('click', () => {
 });
 
 
-const themeToggleBtn = document.getElementById('theme-toggle-btn');
-if (themeToggleBtn) {
-    themeToggleBtn.addEventListener('click', () => {
-        document.body.classList.toggle('light-mode');
-        const isLight = document.body.classList.contains('light-mode');
-        localStorage.setItem('theme', isLight ? 'light' : 'cyberpunk');
-        themeToggleBtn.textContent = isLight ? '☀️ Theme' : '🌙 Theme';
-    });
-}
-
-if (localStorage.getItem('theme') === 'light') {
-    document.body.classList.add('light-mode');
-    if (themeToggleBtn) themeToggleBtn.textContent = '☀️ Theme';
-} 
-
-
 let focusStats = JSON.parse(localStorage.getItem('focusStats')) || { completed: 0, minutes: 0, streak: 0};
 
 function updateStatusUI() {
@@ -521,3 +505,38 @@ if (savedSpotifyUrl) {
         spotifyIframe.src = embedUrl;
     }
 }
+
+const themeToggleBtn = document.getElementById('theme-toggle-btn');
+
+function setTheme(themeName) {
+    document.body.classList.remove('light-mode', 'antique-theme');
+
+    if (themeName === 'antique') {
+        document.body.classList.add('antique-theme');
+        if (themeToggleBtn) themeToggleBtn.textContent = '📜 Antique';
+    } else if (themeName === 'light') {
+        document.bodt.classList.add('light-mode');
+        if (themeToggleBtn) themeToggleBtn.textContent = '☀️ Light';
+    } else {
+        if (themeToggleBtn) themeToggleBtn.textContent = '☀️ Light';
+    }
+    localStorage.setItem('lifeOsTheme', themeName);
+}
+
+
+if (themeToggleBtn) {
+    themeToggleBtn.addEventListener('click', () => {
+        const current = localStorage.getItem('lifeOsTheme') || 'cyberpunk';
+        let next = 'cyberpunk';
+
+        if (current === 'cyberpunk') next = 'antique';
+        else if (current === 'antique') next = 'light';
+        else if (current === 'light') next = 'cyberpunk';
+
+        setTheme(next);
+    });
+}
+
+const savedTheme = localStorage.getItem('lifeOsTheme') || 'cyberpunk';
+setTheme(savedTheme);
+

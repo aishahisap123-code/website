@@ -396,3 +396,44 @@ body.bg-void {
     gap: 0.5rem;
     margin-top: 1rem;
 }
+
+
+body.antique-theme {
+    --bg-color: #1a1612;
+    --card-bg: rgba(32, 26, 20, 0.95);
+    --card-border: #8b6d43;
+    --neon-cyan: #d4af37;
+    --neon-magenta: #a84332;
+    --neon-yellow: #dfbe73;
+    --text-main: #f3e9d2;
+    --text-muted: #9e8764;
+    --glow-cyan: 0 0 12px rgba(212, 175, 55, 0.3);
+    --glow-magenta: 0 0 12px rgba(168, 67, 50, 0.3);
+    --radius: 2px;
+
+    background-color: var(--bg-color);
+    background-image: 
+        radial-gradient(cirlce at 50% 50%, rgba(212, 175, 55, 0.04) 0%, transparent 70%),
+        linear-gradient(rgba(139, 109, 67, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(139, 109, 67, 0.05) 1px, transparent 1px); 
+    background-size: 100% 100%, 30px 30px, 30px, 30px;
+    font-family: 'Georgia', serif;    
+}
+
+
+body.antique-theme h1,
+body.antique-theme h2,
+body.antique-theme h3,
+body.antique-theme .timer-display,
+body.antique-theme #clock {
+    font-family: 'Times New Roman', serif;
+    letter-spacing: 1px;
+}
+
+body.antique-theme .header-card {
+    border-left-color: var(--neon-magenta);
+}
+
+body.antique-theme .card::after {
+    border-color: var(--neon-cyan);
+}
