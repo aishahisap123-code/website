@@ -389,11 +389,21 @@ function renderEvents() {
     if (!eventList) return;
     eventList.innerHTML = '';
     events.forEach((ev, idx) => {
+        
+        if (!ev || !ev.text) return;
+
         const li = document.createElement('li');
-        li.innerHTML = `
-         <span>${ev.text} (${EventCounts.date})</span>
-         <button> onclick="removeEvent(${idx})" class="delete-btn">X</button>
-        `;
+
+        const span = document.createElement('span');
+        span.textContent = `${ev.text} ${ev.date ? `(${ev.date})` : ''}`;
+
+        const delBtn = document.createElement('button');
+        delBtn.className = 'delete-btn';
+        delBtn.textContent = '✖';
+        delBtn.addEventListener('click', () => removeEventListener(idx));
+
+        li.appendChild(span);
+        li.appendChild(delBtn);
         eventList.appendChild(li);
     });
 }
@@ -401,19 +411,28 @@ function renderEvents() {
 if (eventForm) {
     eventForm.addEventListener('submit', (e) => {
         e.preventDefault();
-        events.push({ text: eventInput.value, date: eventDate.value });
-        localStorage.setItem('cyberEvents', JSON.stringify(events));
-        eventInput.value = '';
-        eventDate.value = '';
-        renderEvents();
+       const textVal = eventInput ? eventInput.value.trim() : '';
+       const dateVal = eventDate ? eventDate.value : '';
+
+       if (!textVal) return;
+
+       events.push({ text: textVal, date: dateVal });
+       localStorage.setItem('cyberEvents', JSON.stringify(events));
+
+       if (eventInput) eventInput.value = '';
+       if (eventDAte) eventDate.value = '';
+
+       renderEvents();
+       
     });
 }
 
-window.removeEvents = function(index) {
+function removeEvents(index) {
     events.splice(index, 1);
     localStorage.setItem('cyberEvents', JSON.stringify(events));
     renderEvents();
-};
+}
+
 renderEvents();
 
 const habitChecks = document.querySelectorAll('.habit-check');
