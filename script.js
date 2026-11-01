@@ -453,26 +453,71 @@ habitChecks.forEach((check, index) => {
 });
 
 
-const globalSearch = document.getElementById('global-search');
-const searchBtn = document.getElementById('search-btn');
+const spotifyInput = document.getElementById('spotify-input');
+const loadSpotifyBtn = document.getElementById('load-spotify-btn');
+const spotifyIframe = document.getElementById('spotify-iframe');
 
-function executeSearch() {
-    const query = globalSearch.value.trim();
-    if (query) {
-        if (query.startsWith('https://') || query.startsWith('https://')) {
-            window.open(query, '_blank');
-        } else {
-            window.open(`https://www.google.com/search?q=${encodeURIComponent(query)}`, '_blank');
+function getSpotifyEmbedUrl(input) {
+    try {
+        let cleanInput = input.trim();
 
+        if (cleanInput.startsWith('spotify:')) {
+            const parts = cleanInput.split(':');
+            if (parts.length >= 3) {
+                const type = parts[1];
+                const id = parts[2];
+                return `https://open.spotify.com/embed/${type}/${id}?utm_source=generator&theme=0`;
+            }
         }
-        globalSearch.value = '';
+
+        const urlObj = new URL(cleanInput);
+        const pathParts = urlObj.pathname.split('/').filter(Boolean);
+
+        if (pathParts.length >= 2) {
+            const type = pathParts[0];
+            const id = pathParts[1];
+            return `https://open.spotify.com/embed/${type}/${id}?utm_source=generator&theme=0`;
+        }
+    } catch (err) {
+        console.error("Invalid Spotify link format:", err);
+    }
+    return null;
+}
+
+function updateSpotifyPlayer(url) {
+    const embedUrl = getSpotifyEmbedUrl(url);
+    if (embedUrl && spotifyIframe) {
+        spotifyIframe.src = embedUrl;
+        localStorage.setItem('customSpotifyUrl', url);
+    } else {
+        alert('Please paste a valid Spotify link (e.g., https://open.spotify.com/playlist/...)');
     }
 }
 
-if (searchBtn) searchBtn.addEventListener('click', executeSearch);
-if (globalSearch) {
-    globalSearch.addEventListener('keypress', (e) => {
-        if (e.key == 'Enter') executeSearch();
+if (loadSpotifyBtn && spotifyInput) {
+    loadSpotifyBtn.addEventListener('click', () => {
+        const value = spotifyInput.value.trim();
+        if (value) {
+            updateSpotifyPlayer(value);
+            spotifyInput.value = '';
+        }
+    });
+
+    spotifyInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            const value = spotifyInput.value.trim();
+            if (value) {
+                updateSpotifyPlayer(value);
+                spotifyInput.value = '';
+            }
+        }
     });
 }
 
+const savedSpotifyUrl = localStorage.getItem('customSpotifyUrl');
+if (savedSpotifyUrl) {
+    const embedUrl = getSpotifyEmbedUrl(savedSpotifyUrl);
+    if (embedUrl && spotifyIframe) {
+        spotifyIframe.src = embedUrl;
+    }
+}
