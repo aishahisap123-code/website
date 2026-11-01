@@ -315,35 +315,7 @@ stopAudioBtn.addEventListener('click', () => {
 });
 
 
-let focusStats = JSON.parse(localStorage.getItem('focusStats')) || { completed: 0, minutes: 0, streak: 0};
 
-function updateStatusUI() {
-    const pomoCount = document.getElementById('pomo-counts');
-    const focusMins = document.getElementById('focus-mins');
-    const streakCounter = document.getElementById('streak-counter');
-
-    if (pomoCount) pomoCount.textContent = focusStats.completed;
-    if (focusMins) focusMins.textContent = `${focusStats.minutes} mins`;
-    if (streakCounter) streakCounter.textContent = `STREAK: ${focusStats.streak} DAYS`;
-
-}
-
-updateStatusUI;
-
-function addFocusSession() {
-    focusStats.completed += 1;
-    focusStats.minutes += 25;
-
-    const today = new Date().toDateString();
-    const lastDate = localStorage.getItem('lastFocusDate');
-    if (lastDate !== today) {
-        focusStats.streak += 1;
-        localStorage.setItem('lastFocusDate', today);
-    }
-
-    localStorage.setItem('focusStats', JSON.stringify(focusStats));
-    updateStatusUI();
-}
 
 const bgBtns = document.querySelectorAll('.bg-btn');
 bgBtns.forEach(btn => {
@@ -540,3 +512,47 @@ if (themeToggleBtn) {
 const savedTheme = localStorage.getItem('lifeOsTheme') || 'cyberpunk';
 setTheme(savedTheme);
 
+let focusStats = JSON.parse(localStorage.getItem('focusStats')) || {
+    completed: 0,
+    minutes: 0,
+    streak: 0
+};
+
+function addFocusSession() {
+    focusStats.completed += 1;
+    focusStats.minutes += 25;
+
+    const today = new Date();
+    const todayStr = today.toDateString();
+    const lastDateStr = localStorage.getItem('lastFocusDate');
+
+    if (lastDateStr) {
+        const lastDate = new Date(lastDateStr);
+        const diffInDays = Math.floor((today - lastDate) / (1000 * 60 * 60 * 24));
+
+        if (diffInDays === 1) {
+            focusStats.streak += 1;
+
+        } else if (diffInDays > 1) {
+            focusStats.streak = 1;
+        }
+    } else {
+        focusStats.streak = 1;
+    }
+
+    localStorage.setItem('lastFocusDate', todayStr);
+    localStorage.setItem('focusStats', JSON.stringify(focusStats));
+    updateStatusUI();
+}
+
+function updateStatusUI() {
+    const streakEl = document.getElementById('streak-counter');
+    const minutesEl = document.getElementById('total-focus-minutes');
+    const sessionsEl = document.getElementById('completed-sessions');
+
+    if (streakEl) streakEl.textContent = `STREAK: ${focusStats.streak} DAYS`;
+    if (minutesEl) minutesEl.textContent = `${focusStats.minutes} MINS`;
+    if (sessionsEl) sessionsEl.textContent = `${focusStats.completed} SESSIONS`;
+}
+
+updateStatusUI();
