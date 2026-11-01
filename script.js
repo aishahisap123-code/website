@@ -330,3 +330,124 @@ if (localStorage.getItem('theme') === 'light') {
     if (themeToggleBtn) themeToggleBtn.textContent = '☀️ Theme';
 } 
 
+
+let focusStats = JSON.parse(localStorage.getItem('focusStats')) || { completed: 0, minutes: 0, streak: 0};
+
+function updateStatusUI() {
+    const pomoCount = document.getElementById('pomo-counts');
+    const focusMins = document.getElementById('focus-mins');
+    const streakCounter = document.getElementById('streak-counter');
+
+    if (pomoCount) pomoCount.textContent = focusStats.completed;
+    if (focusMins) focusMins.textContent = `${focusStats.minutes} mins`;
+    if (streakCounter) streakCounter.textContent = `STREAK: ${focusStats.streak} DAYS`;
+
+}
+
+updateStatusUI;
+
+function addFocusSession() {
+    focusStats.completed += 1;
+    focusStats.minutes += 25;
+
+    const today = new Date().toDateString();
+    const lastDate = localStorage.getItem('lastFocusDate');
+    if (lastDate !== today) {
+        focusStats.streak += 1;
+        localStorage.setItem('lastFocusDate', today);
+    }
+
+    localStorage.setItem('focusStats', JSON.stringify(focusStats));
+    updateStatusUI();
+}
+
+const bgBtns = document.querySelectorAll('.bg-btn');
+bgBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.body.classList.remove('bg-matrix', 'bg-void');
+        const mode = btn.dataset.bg;
+        if (mode !== 'default') {
+            document.body.classList.add(`bg-${mode}`);
+        }
+        localStorage.setItem('bgMode', mode)
+    });
+});
+
+const savedBg = localStorage.getItem('bgMode');
+if (savedBg && savedBg !== 'default') {
+    document.body.classList.add(`bg-${savedBg}`);
+}
+
+const eventForm = document.getElementById('event-form');
+const eventInput = document.getElementById('event-form');
+const eventDate = document.getElementById('event-date');
+const eventList = document.getElementById('event-list');
+
+let events = JSON.parse(localStorage.getItem('cyberEvents')) || [];
+
+function renderEvents() {
+    if (!eventList) return;
+    eventList.innerHTML = '';
+    events.forEach((ev, idx) => {
+        const li = document.createElement('li');
+        li.innerHTML = `
+         <span>${ev.text} (${EventCounts.date})</span>
+         <button> onclick="removeEvent(${idx})" class="delete-btn">X</button>
+        `;
+        eventList.appendChild(li);
+    });
+}
+
+if (eventForm) {
+    eventForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        events.push({ text: eventInput.value, date: eventDate.value });
+        localStorage.setItem('cyberEvents', JSON.stringify(events));
+        eventInput.value = '';
+        eventDate.value = '';
+        renderEvents();
+    });
+}
+
+window.removeEvents = function(index) {
+    events.splice(index, 1);
+    localStorage.setItem('cyberEvents', JSON.stringify(events));
+    renderEvents();
+};
+renderEvents();
+
+const habitChecks = document.querySelectorAll('.habit-check');
+const savedHabits = JSON.parse(localStorage.getItem('habitStates')) || [];
+
+habitChecks.forEach((check, index) => {
+    if (savedHabits[index]) check.checked = true;
+    check.addEventListener('change', () => {
+        const states = Array.from(habitChecks).map(c => c.checked);
+        localStorage.setItem('habitStates', JSON.stringify(states));
+    });
+});
+
+
+const globalSearch = document.getElementById('global-search');
+const searchBtn = document.getElementById('search-btn');
+
+function executeSearch() {
+    const query = globalSearch.value.trim();
+    if (query) {
+        if (query.startsWith('https://') || query.startsWith('https://')) {
+            window.open(query, '_blank');
+        } else {
+            window.open(`https://www.google.com/search?q=${encodeURIComponent(query)}`, '_blank');
+
+        }
+        globalSearch.value = '';
+    }
+}
+
+if (searchBtn) searchBtn.addEventListener('click', executeSearch);
+if (globalSearch) {
+    globalSearch.addEventListener('keypress', (e) => {
+        if (e.key == 'Enter') executeSearch();
+    });
+}
+
